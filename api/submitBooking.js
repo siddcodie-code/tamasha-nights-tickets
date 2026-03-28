@@ -6,9 +6,13 @@ let cachedClient = null;
 async function getDB() {
   if (!cachedClient) {
     cachedClient = new MongoClient(MONGO_URI, {
-      serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true },
-      tls: true, tlsAllowInvalidCertificates: true
-    });
+  serverApi: { version: ServerApiVersion.v1, strict: true, deprecationErrors: true },
+  tls: true,
+  tlsAllowInvalidCertificates: true,
+  tlsAllowInvalidHostnames: true,
+  serverSelectionTimeoutMS: 5000,
+  connectTimeoutMS: 10000,
+});
     await cachedClient.connect();
   }
   return cachedClient.db("tamashanights");
